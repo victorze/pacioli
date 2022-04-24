@@ -18,6 +18,18 @@ test('three balanced entries', () => {
   expect(transaction.isBalanced()).toBeTruthy()
 })
 
+test('total debits and credits', () => {
+  const transaction = new Transaction()
+  transaction.addEntry(new Entry(100))
+  transaction.addEntry(new Entry(50))
+  transaction.addEntry(new Entry(-70))
+  transaction.addEntry(new Entry(-80))
+
+  expect(transaction.totalDebits()).toBe(150)
+  expect(transaction.totalCredits()).toBe(150)
+  expect(transaction.isBalanced()).toBeTruthy()
+})
+
 test('unbalanced entries', () => {
   const transaction = new Transaction()
   transaction.addEntry(new Entry(90))

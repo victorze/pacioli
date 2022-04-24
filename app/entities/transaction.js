@@ -11,9 +11,21 @@ class Transaction {
     if (this.entries.length < 2) {
       throw new Error('A transaction must have at least two entries')
     }
+    return this.totalDebits() == this.totalCredits()
+  }
 
-    const amounts = this.entries.map(entry => entry.amount)
-    return amounts.reduce((a, b) => a + b) == 0
+  totalDebits() {
+    return this.entries
+      .filter(entry => entry.amount >= 0)
+      .map(entry => entry.amount)
+      .reduce((a, b) => a + b)
+  }
+
+  totalCredits() {
+    return this.entries
+      .filter(entry => entry.amount < 0)
+      .map(entry => -entry.amount)
+      .reduce((a, b) => a + b)
   }
 }
 
